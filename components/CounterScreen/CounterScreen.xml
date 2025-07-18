@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="CounterScreen" extends="Group">
 	<children>
-		<Label id="header" text="Simple Counter Demo [Increment / Decrement / Reset]"
-				horizAlign="center" width="1280" translation="[0,150]" />
+		<Label id="header" text="Simple Counter Demo [Increment / Decrement / Reset]" horizAlign="center" width="1280" translation="[0,150]" />
 		
-		<Label id="help"   text="Current number of presses:" width="1280"
-				translation="[400,250]" />
+		<Label id="help"   text="Current number of presses:" width="1280" translation="[400,250]" />
 		
 		<Label id="counterLabel" width="1280" translation="[770,250]" text="0" />
 		
-		<LayoutGroup id="btnRow" translation="[115,410]" layoutDirection="horizontal"
-						itemSpacings="[40]">
+		<LayoutGroup id="btnRow" translation="[115,410]" layoutDirection="horizontal" itemSpacings="[40]">
 			<Button id="incBtn"   text="Increment" />
 			<Button id="decBtn"   text="Decrement" />
 			<Button id="resetBtn" text="Reset" visible="false" />

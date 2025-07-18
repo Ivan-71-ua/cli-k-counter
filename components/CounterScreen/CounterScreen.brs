@@ -16,15 +16,15 @@ end sub
 
 sub _initVars()
 	m._counterLabel = m.top.findNode("counterLabel")
-	m._incBtn       = m.top.findNode("incBtn")
-	m._decBtn       = m.top.findNode("decBtn")
-	m._resetBtn     = m.top.findNode("resetBtn")
-	m._btnRow       = m.top.findNode("btnRow")
+	m._incBtn = m.top.findNode("incBtn")
+	m._decBtn = m.top.findNode("decBtn")
+	m._resetBtn = m.top.findNode("resetBtn")
+	m._btnRow = m.top.findNode("btnRow")
 
 
-	m._dynamicResetBtn           = createObject("roSGNode", "Button")
-	m._dynamicResetBtn.text      = "Reset [dm]"
-	m._dynamicResetBtn.visible   = false
+	m._dynamicResetBtn = createObject("roSGNode", "Button")
+	m._dynamicResetBtn.text = "Reset [dm]"
+	m._dynamicResetBtn.visible = false
 	m._btnRow.appendChild(m._dynamicResetBtn)
 end sub
 
@@ -69,12 +69,18 @@ end sub
 '  Обробка клавіш ← / →
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
-	if not press then return false
+	if not press
+		return false
+	end if
 
-	if key <> "left" and key <> "right" then return false
+	if key <> "left" and key <> "right"
+		return false
+	end if
 
 	dir = -1 
-	if key = "right" then dir = 1
+	if key = "right"
+		dir = 1
+	end if
 
 	btnCount = m._buttons.count()
 
@@ -84,7 +90,9 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
 		else
 			idx = _lastVisibleIndex()
 		end if
-		if idx <> -1 then _giveFocus(idx)
+		if idx <> -1 
+			_giveFocus(idx)
+		end if
 		return true
 	end if
 
@@ -104,8 +112,8 @@ end function
 '  Допоміжні функції
 
 sub _updateUi()
-	m._counterLabel.text  = m._counter.ToStr()
-	m._resetBtn.visible   = m._counter > 0
+	m._counterLabel.text = m._counter.ToStr()
+	m._resetBtn.visible = m._counter > 0
 	m._dynamicResetBtn.visible = m._counter > 0
 
 	if (m._focusIndex <> -1) and (not m._buttons[m._focusIndex].visible)
@@ -123,14 +131,18 @@ end sub
 
 function _firstVisibleIndex() as Integer
 	for i = 0 to m._buttons.count() - 1
-		if m._buttons[i].visible then return i
+		if m._buttons[i].visible
+			return i
+		end if
 	end for
 	return -1
 end function
 
 function _lastVisibleIndex() as Integer
 	for i = m._buttons.count() - 1 to 0 step -1
-		if m._buttons[i].visible then return i
+		if m._buttons[i].visible
+			return i
+		end if
 	end for
 	return -1
 end function
