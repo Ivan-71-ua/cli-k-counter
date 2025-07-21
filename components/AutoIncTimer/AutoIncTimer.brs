@@ -4,7 +4,7 @@ sub init()
 	m.top.repeat   = true
 	m.top.control  = "stop"
 
-	m.top.observeField("fire", "_echoFire")
+	
 end sub
 
 

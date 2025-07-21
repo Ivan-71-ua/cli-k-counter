@@ -7,7 +7,7 @@
 		
 		<Label id="counterLabel" width="1280" translation="[770,250]" text="0" />
 		
-		<LayoutGroup id="mainRow" translation="[115,350]" layoutDirection="vert" itemSpacings="[40]">
+		<LayoutGroup id="mainRow" translation="[115,350]" layoutDirection="horiz" itemSpacings="[40]">
 			<Button id="incBtn"   text="Increment" />
 			<Button id="decBtn"   text="Decrement" />
 			<Button id="resetBtn" text="Reset" visible="false" />
