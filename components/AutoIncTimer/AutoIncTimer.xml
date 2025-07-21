@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="AutoIncTimer" extends="Timer">
+	<interface>
+		<field id="running" type="boolean" value="false" onChange="_onRunningChange" />
+	</interface>
+
+	<script type="text/brightscript" uri="AutoIncTimer.brs" />
+</component>

@@ -5,7 +5,7 @@ sub init()
 	_cacheButtons()
 
 	m._focusIndex = -1
-	m._counter    = 0
+	m._counter = 0
 
 	m.top.setFocus(true)
 	_updateUi()
@@ -16,17 +16,25 @@ end sub
 
 sub _initVars()
 	m._counterLabel = m.top.findNode("counterLabel")
+
 	m._incBtn = m.top.findNode("incBtn")
 	m._decBtn = m.top.findNode("decBtn")
 	m._resetBtn = m.top.findNode("resetBtn")
-	m._btnRow = m.top.findNode("btnRow")
 
+	m._startBtn = m.top.findNode("startBtn")
+	m._stopBtn = m.top.findNode("stopBtn")
+
+	m._mainRow = m.top.findNode("mainRow")
+	m._autoRow = m.top.findNode("autoRow")
+
+	m._autoIncTimer = m.top.findNode("autoIncTimer")
 
 	m._dynamicResetBtn = createObject("roSGNode", "Button")
 	m._dynamicResetBtn.text = "Reset [dm]"
 	m._dynamicResetBtn.visible = false
-	m._btnRow.appendChild(m._dynamicResetBtn)
+	m._mainRow.appendChild(m._dynamicResetBtn)
 end sub
+
 
 
 sub _attachObservers()
@@ -34,13 +42,22 @@ sub _attachObservers()
 	m._decBtn.observeField("buttonSelected", "_onDecrement")
 	m._resetBtn.observeField("buttonSelected", "_onReset")
 	m._dynamicResetBtn.observeField("buttonSelected", "_onReset")
+
+	m._startBtn.observeField("buttonSelected", "_onStart")
+	m._stopBtn.observeField("buttonSelected",  "_onStop")
+
+	m._autoIncTimer.observeField("fire", "_onTimerFire")
 end sub
 
 
 sub _cacheButtons()
 	m._buttons = []
-	for i = 0 to m._btnRow.getChildCount() - 1
-		m._buttons.push(m._btnRow.getChild(i))
+	for i = 0 to m._mainRow.getChildCount() - 1
+		m._buttons.push(m._mainRow.getChild(i))
+	end for
+
+	for i = 0 to m._autoRow.getChildCount() - 1
+		m._buttons.push(m._autoRow.getChild(i))
 	end for
 end sub
 
@@ -62,6 +79,23 @@ end sub
 
 sub _onReset()
 	m._counter = 0
+	_updateUi()
+end sub
+
+
+'– таймер –
+sub _onStart()
+	m._autoIncTimer.running = true
+	_updateUi()
+end sub
+
+sub _onStop()
+	m._autoIncTimer.running = false
+	_updateUi()
+end sub
+
+sub _onTimerFire()
+	m._counter += 1
 	_updateUi()
 end sub
 
@@ -115,6 +149,7 @@ sub _updateUi()
 	m._counterLabel.text = m._counter.ToStr()
 	m._resetBtn.visible = m._counter > 0
 	m._dynamicResetBtn.visible = m._counter > 0
+
 
 	if (m._focusIndex <> -1) and (not m._buttons[m._focusIndex].visible)
 		m._focusIndex = -1
