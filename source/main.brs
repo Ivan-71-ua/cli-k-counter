@@ -4,7 +4,9 @@ sub Main()
     screen.setMessagePort(port)
 
     scene  = screen.createScene("MainScene")
-    screen.show()
+    screen.show() 
+    ' vscode_rale_tracker_entry
+
 
     while true
         msg = wait(0, port)
