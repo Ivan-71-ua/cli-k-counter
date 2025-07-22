@@ -4,16 +4,18 @@ sub init()
 	_attachObservers()
 	_cacheButtons()
 
-	m._focusIndex = -1
+	m._focusIndex = 0
 	m._counter = _loadCounterFromRegistry()
 
 
-	m.top.setFocus(true)
+	
 	_updateUi()
 end sub
 
 
-'–––– Registry helpers ––––
+
+
+'–––– Допоміжна функції для роботи з регістром ––––
 function _loadCounterFromRegistry() as integer
 	sec = CreateObject("roRegistrySection", "appState")
 	val = sec.Read("counter")         
@@ -142,19 +144,10 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
 
 	btnCount = m._buttons.count()
 
-	if m._focusIndex = -1 then
-		if (dir = 1) 
-			idx = _firstVisibleIndex() 
-		else
-			idx = _lastVisibleIndex()
-		end if
-		if idx <> -1 
-			_giveFocus(idx)
-		end if
-		return true
-	end if
+	idx = m._focusIndex
+	_giveFocus(idx)
 
-	idx = m._focusIndex + dir
+	idx += dir
 	while idx >= 0 and idx < btnCount
 		if m._buttons[idx].visible then
 			_giveFocus(idx)
@@ -175,33 +168,16 @@ sub _updateUi()
 	m._dynamicResetBtn.visible = m._counter > 0
 
 
-	if (m._focusIndex <> -1) and (not m._buttons[m._focusIndex].visible)
-		m._focusIndex = -1
-		m.top.setFocus(true)
+	if not m._buttons[m._focusIndex].visible
+		m._focusIndex = 0
+		_giveFocus(0)
 	end if
 end sub
 
 
 sub _giveFocus(idx as Integer)
+	'? "_giveFocus"
 	m._buttons[idx].setFocus(true)
 	m._focusIndex = idx
 end sub
 
-
-function _firstVisibleIndex() as Integer
-	for i = 0 to m._buttons.count() - 1
-		if m._buttons[i].visible
-			return i
-		end if
-	end for
-	return -1
-end function
-
-function _lastVisibleIndex() as Integer
-	for i = m._buttons.count() - 1 to 0 step -1
-		if m._buttons[i].visible
-			return i
-		end if
-	end for
-	return -1
-end function

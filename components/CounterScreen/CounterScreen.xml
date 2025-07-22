@@ -3,7 +3,7 @@
 	<children>
 		<Label id="header" text="Simple Counter Demo [Increment / Decrement / Reset]" horizAlign="center" width="1280" translation="[0,150]" />
 		
-		<Label id="help"   text="Current number of presses:" width="1280" translation="[400,250]" />
+		<Label id="help" text="Current number of presses:" width="1280" translation="[400,250]" />
 		
 		<Label id="counterLabel" width="1280" translation="[770,250]" text="0" />
 		
