@@ -5,11 +5,31 @@ sub init()
 	_cacheButtons()
 
 	m._focusIndex = -1
-	m._counter = 0
+	m._counter = _loadCounterFromRegistry()
+
 
 	m.top.setFocus(true)
 	_updateUi()
 end sub
+
+
+'–––– Registry helpers ––––
+function _loadCounterFromRegistry() as integer
+	sec = CreateObject("roRegistrySection", "appState")
+	val = sec.Read("counter")         
+	if Type(val) = "Invalid" or val = invalid or val = ""  
+		return 0
+	end if
+	return val.ToInt()
+end function
+
+sub _saveCounterToRegistry()
+	sec = CreateObject("roRegistrySection", "appState")
+	sec.Write("counter", m._counter.ToStr())
+	sec.Flush()
+end sub
+
+
 
 
 '  Ініціалізація та кэшування вузлів
@@ -67,18 +87,21 @@ end sub
 
 sub _onIncrement()
 	m._counter += 1
+	_saveCounterToRegistry()
 	_updateUi()
 end sub
 
 sub _onDecrement()
 	if m._counter > 0 then
 		m._counter -= 1
+		_saveCounterToRegistry()
 		_updateUi()
 	end if
 end sub
 
 sub _onReset()
 	m._counter = 0
+	_saveCounterToRegistry()
 	_updateUi()
 end sub
 
@@ -95,6 +118,7 @@ sub _onStop()
 end sub
 
 sub _onTimerFire()
+	_saveCounterToRegistry()
 	m._counter += 1
 	_updateUi()
 end sub

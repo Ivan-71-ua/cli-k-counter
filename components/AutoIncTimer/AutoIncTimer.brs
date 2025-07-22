@@ -3,8 +3,6 @@ sub init()
 	m.top.duration = 2
 	m.top.repeat   = true
 	m.top.control  = "stop"
-
-	
 end sub
 
 
